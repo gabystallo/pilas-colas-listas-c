@@ -1,9 +1,17 @@
 #include <stdio.h>
 
+// comunes para pilas, colas y listas
+
+// una sola estructura en memoria, para los 3 casos:
+// ROOT -> NODO(mas nuevo) -> NODO -> NODO -> NODO(mas viejo) -> NULL
+
+// PROBAR CON ´make test´
+
 struct nodo {
   int val;
   struct nodo * sig;
 };
+
 
 int init(struct nodo ** estructura) {
 
@@ -11,8 +19,6 @@ int init(struct nodo ** estructura) {
 
   return 0;
 }
-
-//es común para pilas y para colas
 
 int push(struct nodo ** pila, struct nodo * nodo) {
 
@@ -135,6 +141,6 @@ int main() {
   printf("%i\n",(*aux).val);
   while(aux=quitar(&lista,0))
     printf("%i\n",(*aux).val);
-  
+
   return 0;
 }
