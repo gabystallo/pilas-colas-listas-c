@@ -52,12 +52,48 @@ struct nodo * unqueue(struct nodo ** cola) {
   return aux;
 }
 
+// listas //
 
+int agregar(struct nodo ** lista, struct nodo * nodo, unsigned int posicion) {
+
+  int i;
+  struct nodo ** apuntador;
+
+  apuntador = lista;
+
+  for(i=0;*apuntador && i<posicion;i++)
+    apuntador=&(**apuntador).sig;
+
+  (*nodo).sig=*apuntador;
+  *apuntador=nodo;
+
+  return 0;
+
+}
+
+struct nodo * quitar(struct nodo ** lista, unsigned int posicion) {
+
+  int i;
+  struct nodo ** apuntador;
+  struct nodo * aux;
+
+  apuntador = lista;
+
+  for(i=0;*apuntador && (**apuntador).sig && i<posicion;i++)
+    apuntador=&(**apuntador).sig;
+
+  if(aux = *apuntador) //si la lista estuviera vacía, la línea siguiente daría error
+    *apuntador = (**apuntador).sig;
+
+  return aux;
+
+}
 
 int main() {
 
   struct nodo * pila;
   struct nodo * cola;
+  struct nodo * lista;
   struct nodo nodo1;
   struct nodo nodo2;
   struct nodo nodo3;
@@ -86,6 +122,18 @@ int main() {
   push(&cola, &nodo3);
 
   while(aux=unqueue(&cola))
+    printf("%i\n",(*aux).val);
+
+  //lista
+  printf("-- lista --\n");
+  init(&lista);
+  agregar(&lista,&nodo1,0);
+  agregar(&lista,&nodo3,1);
+  agregar(&lista,&nodo2,1);
+
+  aux=quitar(&lista,1);
+  printf("%i\n",(*aux).val);
+  while(aux=quitar(&lista,0))
     printf("%i\n",(*aux).val);
 
   return 0;
