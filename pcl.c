@@ -135,6 +135,6 @@ int main() {
   printf("%i\n",(*aux).val);
   while(aux=quitar(&lista,0))
     printf("%i\n",(*aux).val);
-
+  
   return 0;
 }
