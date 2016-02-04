@@ -7,6 +7,9 @@
 
 // PROBAR CON ´make test´
 
+
+//(*cosa).sig en vez de cosa->sig, porque queda más lindo y se ve más rápido la cantidad de desreferenciaciones
+
 struct nodo {
   int val;
   struct nodo * sig;
@@ -146,6 +149,51 @@ int intercambiar(struct nodo ** lista, unsigned int p1, unsigned int p2) {
 
 }
 
+int len(struct nodo ** lista) {
+  struct nodo * nodo;
+  int l;
+  l=0;
+  nodo=*lista;
+  while(nodo) {
+    nodo=(*nodo).sig;
+    l++;
+  }
+
+  return l;
+}
+
+int mostrar(struct nodo ** lista) {
+  struct nodo * nodo;
+  int l;
+  l=0;
+  nodo=*lista;
+  while(nodo) {
+    printf("%i\n",(*nodo).val);
+    nodo=(*nodo).sig;
+    l++;
+  }
+}
+
+int ordenar_burbujeo(struct nodo ** lista) {
+
+  int i, j, l;
+  struct nodo * jnodo, *aux;
+
+  l=len(lista);
+  for(i=0 ; i<l-1 ; i++) {
+    for(j=0,jnodo=*lista ; j<l-i-1 ; j++,jnodo=(*jnodo).sig) {
+      if((*jnodo).val>(*(*jnodo).sig).val) {
+        //ojo voy a quedar apuntando al intercambiado, tengo que conservar la "posicion" a la que apuntanta el puntero y no el nodo al que apunta el puntero
+        aux=(*jnodo).sig;
+        intercambiar(lista, j, j+1);
+        jnodo=aux;
+      }
+    }
+  }
+
+  return 0;
+}
+
 int main() {
 
   struct nodo * pila;
@@ -203,8 +251,21 @@ int main() {
   agregar(&lista,&nodo2,1);
   agregar(&lista,&nodo4,3);
   intercambiar(&lista, 1, 3);
+  printf("la lista tiene %i items\n",len(&lista));
   while(aux=pop(&lista))
     printf("%i\n",(*aux).val);
+  printf("la lista tiene %i items\n",len(&lista));
+
+  //lista misc
+  printf("-- lista ordenar --\n");
+  init(&lista);
+  push(&lista, &nodo3);
+  push(&lista, &nodo1);
+  push(&lista, &nodo4);
+  push(&lista, &nodo2);
+  printf("burbuja\n");
+  ordenar_burbujeo(&lista);
+  mostrar(&lista);
 
   return 0;
 }

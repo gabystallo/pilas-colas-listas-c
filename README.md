@@ -9,3 +9,7 @@ Dibujar para entender :-)
 ## make
 
 El Makefile es re trivial. ´make test´ para probar y listo.
+
+## TODO
+
+Más métodos de ordenamiento, no salen TAN trivialmente ;-)
